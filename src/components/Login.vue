@@ -3,7 +3,7 @@
     <b-col cols="6">
       <h2>Please Login</h2>
       <div v-if="errors && errors.length">
-        <div v-for="error of errors">
+        <div v-for="error of errors" :error="error" :key="error">
           <b-alert show>{{error.message}}</b-alert>
         </div>
       </div>
@@ -45,16 +45,16 @@ export default {
     onSubmit (evt) {
       evt.preventDefault()
       axios.post(`http://localhost:3000/api/auth/login/`, this.login)
-      .then(response => {
-        localStorage.setItem('jwtToken', response.data.token)
-        this.$router.push({
-          name: 'BookList'
+        .then(response => {
+          localStorage.setItem('jwtToken', response.data.token)
+          this.$router.push({
+            name: 'BookList'
+          })
         })
-      })
-      .catch(e => {
-        console.log(e)
-        this.errors.push(e)
-      })
+        .catch(e => {
+          console.log(e)
+          this.errors.push(e)
+        })
     },
     register () {
       this.$router.push({

@@ -10,7 +10,7 @@
         </template>
       </b-table>
       <ul v-if="errors && errors.length">
-        <li v-for="error of errors">
+        <li v-for="error of errors" :error="error" :key="error">
           <b-alert show>{{error.message}}</b-alert>
         </li>
       </ul>
@@ -38,17 +38,17 @@ export default {
   created () {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
     axios.get(`http://localhost:3000/book`)
-    .then(response => {
-      this.books = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-      if(e.response.status === 401) {
-        this.$router.push({
-          name: 'Login'
-        })
-      }
-    })
+      .then(response => {
+        this.books = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+        if (e.response.status === 401) {
+          this.$router.push({
+            name: 'Login'
+          })
+        }
+      })
   },
   methods: {
     details (book) {

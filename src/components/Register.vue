@@ -3,7 +3,7 @@
     <b-col cols="6">
       <h2>Please Register</h2>
       <div v-if="errors && errors.length">
-        <div v-for="error of errors">
+        <div v-for="error of errors" :error="error" :key="error">
           <b-alert show>{{error.message}}</b-alert>
         </div>
       </div>
@@ -45,17 +45,17 @@ export default {
     onSubmit (evt) {
       evt.preventDefault()
       axios.post(`http://localhost:3000/api/auth/register/`, this.register)
-      .then(response => {
-        alert("Registered successfully")
-        this.$router.push({
-          name: 'Login'
+        .then(response => {
+          alert('Registered successfully')
+          this.$router.push({
+            name: 'Login'
+          })
         })
-      })
-      .catch(e => {
-        console.log(e)
-        this.errors.push(e)
-      })
-    },
+        .catch(e => {
+          console.log(e)
+          this.errors.push(e)
+        })
+    }
   }
 }
 </script>
